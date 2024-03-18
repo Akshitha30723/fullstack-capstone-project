@@ -7,13 +7,13 @@ assignees: ''
 
 ---
 
-As a Full Stack Developer
-I need userstories
-So that it can help in understanding the project
+**As a** [role]
+**I need** [function]
+**So that** [benefit]
 ### Details and Assumptions
-    
+    * [document what you know]
 ### Acceptance Criteria
     gherkin
     Given [some context]
     When [certain action is taken]
-    Then [the outcome of action is observed]
+    Then [the outcome of action is observed
