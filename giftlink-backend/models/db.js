@@ -1,4 +1,3 @@
-// db.js
 require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 
@@ -15,14 +14,22 @@ async function connectToDatabase() {
 
     const client = new MongoClient(url);      
 
-    // Task 1: Connect to MongoDB
-    // {{insert code}}
+    try {
+        // Task 1: Connect to MongoDB
+        await client.connect();
+        console.log("Connected to MongoDB");
 
-    // Task 2: Connect to database giftDB and store in variable dbInstance
-    //{{insert code}}
+        // Task 2: Connect to database giftDB and store in variable dbInstance
+        dbInstance = client.db(dbName);
+        console.log(`Connected to database: ${dbName}`);
 
-    // Task 3: Return database instance
-    // {{insert code}}
+        // Task 3: Return database instance
+        return dbInstance;
+    } catch (error) {
+        console.error("Error connecting to database:", error);
+        throw error;
+    }
 }
 
 module.exports = connectToDatabase;
+
