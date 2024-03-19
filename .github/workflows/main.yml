@@ -1,0 +1,169 @@
+1.
+Question 1
+Consider the following code to handle a user login.
+
+router.post('/login', async (req, res) => {
+
+ try {
+
+ const db = await connectToDatabase();
+
+ const collection = db.collection("users");
+
+ const theUser = await collection.findOne({ email: req.body.email });
+
+
+ if (theUser) {
+
+ const userName = theUser.firstName;
+
+ const userEmail = theUser.email;
+
+ let payload = {
+
+ user: {
+
+ id: theUser._id.toString(),
+
+ },
+
+ };
+
+
+ const authtoken = jwt.sign(payload, JWT_SECRET);
+
+ logger.info('User logged in successfully');
+
+ return res.status(200).json({ authtoken, userName, userEmail });
+
+ } else {
+
+ logger.error('User not found');
+
+ return res.status(404).json({ error: 'User not found' });
+
+ }
+
+ } catch (e) {
+
+ logger.error(e);
+
+ return res.status(500).json({ error: 'Internal server error', details: e.message });
+
+ }
+
+});
+
+
+Which of the following statements BEST describes the behavior of the server in response to a valid user login attempt?
+
+1 point
+
+The server returns a status code of 200 along with the user’s authentication token and account details.
+
+
+
+The server returns a status code of 404 with an error message indicating the user was not found.
+
+
+
+The server logs an error message indicating the user was not found in the database.
+
+
+
+The server encounters an internal server error and returns a status code of 500.
+
+
+2.
+Question 2
+A user attempts to log in. However, the server responds with an error message due to an invalid email format. Which of the following modifications would be MOST appropriate?
+
+1 point
+
+Modify the server’s response to provide a more user-friendly error message.
+
+
+
+Redirect the user to the registration page to create a new account with a valid email format.
+
+
+
+Display an error message indicating the server response without modifying the client-side code.
+
+
+
+Implement client-side email validation using regular expressions before making the API call.
+
+
+3.
+Question 3
+During your testing of RegisterPage component, you attempt to register with an email already registered. The server responds with an error message indicating that the email is already in use. Which of the following is MOST appropriate?
+
+1 point
+
+Modify the server’s response to provide a more user-friendly error message.
+
+
+
+Implement client-side validation to check if the email is already registered before making the API call.
+
+
+
+Redirect the user to the login page to log in with the existing credentials.
+
+
+
+Display the error message from the server response without modifying the client-side code.
+
+
+4.
+Question 4
+The user’s data was not properly saved to the database due to a database connection issue. What should happen as a result?
+
+1 point
+
+The user’s authentication token remains valid, allowing access to certain features despite data not being saved.
+
+
+
+The user’s data is lost permanently, and the user will need to register again.
+
+
+
+The user’s registration process fails entirely, and no authentication token is issued.
+
+
+
+The user’s data will be saved to a backup database automatically, ensuring no loss of information.
+
+
+5.
+Question 5
+If a user wants to update their email address, in their profile, which of the following queries would be the MOST appropriate to find the user details?
+
+1 point
+
+const user = await User.findOne({ id: req.params.userId });
+
+
+
+const user = await User.findOneAndUpdate(
+
+ { email: req.body.email },
+
+ { $set: { email: req.body.newEmail } },
+
+ { new: true }
+
+);
+
+
+
+const user = await User.findOne({ email: req.body.email });
+
+
+
+const user = await User.findOne({ password: req.body.password });
+
+
+Coursera
